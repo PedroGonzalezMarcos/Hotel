@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route('/api/client', name: 'api_')]
 class ClientListController extends AbstractController
 {   
     public function __construct(private ClientRepository $clientRepo, private HotelRepository $hotelRepo)
@@ -46,5 +47,22 @@ class ClientListController extends AbstractController
             'message' => 'THIS IS THE FUCKING CLIENT LIST!',
             'client' => $client
         ]);
+    }
+
+    #[Route('/', name: 'app_client_show_all', methods: ['get'])]
+    public function showAll(): JsonResponse
+    {
+        $clients = $this->clientRepo->findAll();
+        $data = [];
+
+        foreach ($clients as $client) {
+            $data[] = [
+                'id' => $client->getId(),
+                'Nombre' => $client->getNombre(),
+                'dni' => $client->getDni(),
+            ];
+        }
+
+        return $this->json($data, 200);
     }
 }

@@ -26,7 +26,7 @@ class Hotel
 
     #[ORM\OneToOne(inversedBy: 'hotel', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    private ?director $director = null;
+    private ?Director $director = null;
 
     #[ORM\OneToMany(mappedBy: 'hotel', targetEntity: Room::class, orphanRemoval: true, cascade: ['persist', 'remove'])]
     private Collection $rooms;

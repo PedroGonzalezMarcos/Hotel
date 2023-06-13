@@ -19,8 +19,8 @@ class Director
     #[ORM\Column(length: 255)]
     private ?string $nombre = null;
 
-    #[ORM\OneToOne(mappedBy: 'Director', cascade: ['persist', 'remove'])]
-    private ?hotel $hotel = null;
+    #[ORM\OneToOne(mappedBy: 'director', cascade: ['persist', 'remove'])]
+    private ?Hotel $hotel = null;
 
     public function getId(): ?int
     {
@@ -51,12 +51,12 @@ class Director
         return $this;
     }
 
-    public function getHotel(): ?hotel
+    public function getHotel(): ?Hotel
     {
         return $this->hotel;
     }
 
-    public function setHotel(hotel $hotel): self
+    public function setHotel(Hotel $hotel): self
     {
         // set the owning side of the relation if necessary
         if ($hotel->getDirector() !== $this) {
