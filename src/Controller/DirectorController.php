@@ -106,6 +106,7 @@ class DirectorController extends AbstractController
     /*public function index(): JsonResponse
     {
 
+        
     $director1 = new Director();
     $director1->setDni(358340);
     $director1->setNombre('Paula');
