@@ -74,9 +74,10 @@ class DirectorController extends AbstractController
         
         $director = $this->directorRepo->find($id);
         
-        $director->setNombre($request->request->get('Nombre'));
+        $director->setNombre($request->request->get('nombre'));
         $director->setDni($request->request->get('dni'));
-      
+        
+        $this->directorRepo->save($director, true);
 
         $data =  [
             'id' => $director->getId(),

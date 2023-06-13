@@ -8,6 +8,7 @@ use App\Entity\Hotel;
 use App\Repository\HotelRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/api/client', name: 'api_')]
@@ -49,6 +50,8 @@ class ClientListController extends AbstractController
         ]);
     }
 
+   
+
     #[Route('/', name: 'app_client_show_all', methods: ['get'])]
     public function showAll(): JsonResponse
     {
@@ -60,9 +63,31 @@ class ClientListController extends AbstractController
                 'id' => $client->getId(),
                 'Nombre' => $client->getNombre(),
                 'dni' => $client->getDni(),
+                'adress' =>$client->getAddress()
             ];
         }
 
         return $this->json($data, 200);
+    }
+
+    #[Route('/new', name: 'api_client_create', methods:['post'] )]
+    public function create(Request $request): JsonResponse
+    {
+    
+        $client = new Client();
+        $client->setNombre($request->request->get('nombre'));
+        $client->setDni($request->request->get('dni'));
+        $client->setAddress($request->request->get('address'));
+
+        $this->clientRepo->save($client, true);
+
+        $data =  [
+            'id' => $client->getId(),
+            'Nombre' => $client->getNombre(),
+            'dni' => $client->getDni(),
+            'adress' =>$client->getAddress()
+        ];
+
+        return $this->json([$data]);
     }
 }
